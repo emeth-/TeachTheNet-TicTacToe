@@ -140,7 +140,7 @@ class Board
 					@board[from] = '*'
 					#update the black_pieces hash to include the new space
 					@black_pieces[to] = @black_pieces[from]
-					@black_pieces.delete('from')
+					@black_pieces.delete(from)
 				else
 					puts "\nInvalid move. Try again.\n"
 					player_turn(color)
@@ -158,7 +158,7 @@ class Board
 					@board[from] = '*'
 					#update the white_pieces hash to include the new space
 					@white_pieces[to] = @white_pieces[from]
-					@white_pieces.delete('from')
+					@white_pieces.delete(from)
 				else
 					puts "\nInvalid move. Try again.\n"
 					player_turn(color)
@@ -190,93 +190,137 @@ class Board
 
 			#pawns can move one tile vertically, or one tile diagonally when attacking
 		when *pawn
-			#case: tries to move pawn more than 1 tile (vertically) at a time
-			if (toTile.split('')[0].ord - fromTile.split('')[0].ord).abs != 1
-				return false
-			#case tries to move diagonally with no opponent piece there
-			#note: don't need to re check item 1 again here.
-			elsif (toTile.split('')[1].to_i - fromTile.split('')[1].to_i).abs == 1
-				if player == 'white'
-					if @black_pieces.keys.include?(toTile)
-						return true
-					else
-						return false
-					end
-				elsif player == 'black'
-					if @white_pieces.keys.include?(toTile)	
-						return true
-					else
-						return false
-					end	
-				end
-			else
-			#prevent a one-space backwards move for pawns
-				if player == 'white'
-					if toTile.split('')[0].ord - fromTile.split('')[0].ord != -1
-						return false
-					else 
-						return true unless @board[toTile] != '*'
-					end
-				elsif player == 'black'
-					if toTile.split('')[0].ord - fromTile.split('')[0].ord != 1
-						return false
-					else
-						return true unless @board[toTile] != '*'
-					end
-				end
-			return false
-			end
-		
+			pawnCheck(fromTile,fromValue,toTile,player)
+			
 		when *rook
-			#case: tries to move diagonally. Invalid move.
-			if toTile.split('')[1] != fromTile.split('')[1]
-				if toTile.split('')[0] == fromTile.split('')[0]
-					if player == 'white'
-						return true if !@white_pieces.keys.include?(toTile)
-					else
-						return true if !@black_pieces.keys.include?(toTile)
-					end
+			rookCheck(fromTile,fromValue,toTile,player)
+		end
+	end
+			
+
+	#This method verifies that a pawn move is valid.
+	def pawnCheck(fromTile,fromValue,toTile,player)
+	#case: tries to move pawn more than 1 tile (vertically) at a time
+		if (toTile[0].ord - fromTile[0].ord).abs != 1
+			return false
+		#case tries to move diagonally with no opponent piece there
+		#note: don't need to re check item 1 again here.
+		elsif (toTile[1].to_i - fromTile[1].to_i).abs == 1
+			if player == 'white'
+				if @black_pieces.keys.include?(toTile)
+					return true
 				else
 					return false
 				end
-			end
-			#case: check whether there's a piece blocking the path from "to" to "from"
-			#check whether going down or up (each player can do either with a rook)
-			#going down:
-			if  toTile.split('')[0].ord > fromTile.split('')[0].ord
-				midPieces=[]
-				column = fromTile.split('')[1]
-				#case 1: Black turn (we count up)
-				(fromTile.split('')[0]..toTile.split('')[0]).each {|tile| midPieces << @board[tile.concat(column)] }
-				if player == 'white'
-					return true if midPieces[1..-2].all? {|i| i == '*'} && !@white_pieces.keys.include?(toTile)
+			elsif player == 'black'
+				if @white_pieces.keys.include?(toTile)	
+					return true
 				else
-					return true if midPieces[1..-2].all? {|i| i == '*'} && !@black_pieces.keys.include?(toTile)
-				end
-				return false
-			#going up:
-			else
-				midPieces=[]
-				column = fromTile.split('')[1]
-				#case 1: white turn (we count down)
-				(fromTile.split('')[0].ord).downto(toTile.split('')[0].ord).each {|tile| midPieces << @board[(tile.chr).concat(column)] }
-				#check that you aren't capturing your own piece
-				if player == 'white'
-					return true if midPieces[1..-2].all? {|i| i == '*'} && !@white_pieces.keys.include?(toTile)
-				else
-					return true if midPieces[1..-2].all? {|i| i == '*'} && !@black_pieces.keys.include?(toTile)
-				end
-				return false
-
+					return false
+				end	
 			end
-			
-
-
-
-
-
+		else
+		#prevent a one-space backwards move for pawns
+			if player == 'white'
+				if toTile[0].ord - fromTile[0].ord != -1
+					return false
+				else 
+					return true unless @board[toTile] != '*'
+				end
+			elsif player == 'black'
+				if toTile[0].ord - fromTile[0].ord != 1
+					return false
+				else
+					return true unless @board[toTile] != '*'
+				end
+			end
+		return false
 		end
 	end
+
+	#This method checks that a rook move is valid
+
+	def rookCheck(fromTile,fromValue,toTile,player)
+		#fromTile is something like "a1" and toTile is something like "e3". fromValue is the piece
+
+		#Case 1: Prevent diagonal moves
+		if (fromTile[0] != toTile[0])
+			if (fromTile.split('')[1] != toTile.split('')[1])
+				return false
+			end
+		end
+
+		#Case 2: Prevent moving if other pieces are in the way
+		#It's OK to assume no diagonal moves at this point in the check
+		#Case 2a: Horizontal move
+		if fromTile[1] != toTile[1]
+			midPieces=[]
+			#Case 2aa: Horizontal move (right)
+			if fromTile[1].to_i < toTile[1].to_i
+				(fromTile[1]..toTile[1]).each {|i| midPieces << @board[fromTile[0].concat(i)]}
+				if midPieces.length == 2
+					if player == 'white'
+						if @white_pieces.keys.include?(toTile)
+							return false
+						else
+							return true
+						end
+					elsif player == 'black'
+						if @black_pieces.keys.include?(toTile)
+							return false
+						else
+							return true
+						end
+					end
+				elsif midPieces.length == 3
+					if midPieces[1] != '*'
+						return false
+					else
+						if player == 'white'
+							if @white_pieces.keys.include?(toTile)
+								return false
+							else
+								return true
+							end
+						elsif player == 'black'
+							if @black_pieces.keys.include?(toTile)
+								return false
+							else
+								return true
+							end
+						end
+					end
+				else
+					if midPieces[1..-2].each {|i| i != '*'}
+						return false
+					else
+						if player == 'white'
+							puts "mid:::: #{midPieces}"
+							if @white_pieces.keys.include?(toTile)
+								return false
+							else
+								return true
+							end
+						elsif player == 'black'
+							if @black_pieces.keys.include?(toTile)
+								return false
+							else
+								return true
+							end
+						end
+					end
+				end
+			end
+
+		#Case 2b: Vertical move
+		else
+			return true
+		end
+		return true
+	end
+
+
+		
 
 
 end
