@@ -26,7 +26,6 @@ class MasterMind
            code << (rand(6).ceil + 65).chr
        end
        @code=code.to_s
-       puts @code
    end
    
    def playGame
@@ -34,6 +33,10 @@ class MasterMind
            while @turns_left > 0
                 puts "You have #{@turns_left} remaining! Enter your guess: "
                 guess=gets.chomp.upcase
+                if guess.length != 4
+                    puts "Invalid entry. Try again."
+                    playGame
+                end
                 result=checkGuess(guess)
                 if result == "RRRR"
                     puts "You win!!!!"
