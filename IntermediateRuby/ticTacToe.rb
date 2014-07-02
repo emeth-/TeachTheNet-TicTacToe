@@ -107,17 +107,84 @@ class Game
         puts "Game Over! The winner is #{winner}!"
         return true      
     end
-    
-    
+
    end
-   
 
-
-      
-       
-  
 end
 
 g=Game.new
 g.play
+
+#Sample output below
+
+=begin
+Welcome to the game!
+
+You are O!
+
+ | | 
+-----
+ | | 
+-----
+ | | 
+
+It's O's turn!
+
+Where would you like to move? (Ex: A1, A2, etc): 
+ a1
+
+O| | 
+-----
+ | | 
+-----
+ | | 
+
+It's X's turn!
+
+Where would you like to move? (Ex: A1, A2, etc): 
+ b1
+
+O| | 
+-----
+X| | 
+-----
+ | | 
+
+It's O's turn!
+
+Where would you like to move? (Ex: A1, A2, etc): 
+ b2
+
+O| | 
+-----
+X|O| 
+-----
+ | | 
+
+It's X's turn!
+
+Where would you like to move? (Ex: A1, A2, etc): 
+ c1
+
+O| | 
+-----
+X|O| 
+-----
+X| | 
+
+It's O's turn!
+
+Where would you like to move? (Ex: A1, A2, etc): 
+ c3
+
+O| | 
+-----
+X|O| 
+-----
+X| |O
+
+Game Over! The winner is O!
+=end
+
+
 
