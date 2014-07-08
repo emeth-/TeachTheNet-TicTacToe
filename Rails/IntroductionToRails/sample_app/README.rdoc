@@ -1,28 +1,5 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This sample application is a fairly robust Twitter clone.  The application allows users to create accounts, to log in (storing sessions), to post "tweets", to follow other users, and to unfollow other users.  Additionally, it features a status feed that is made up of the tweets of the users that are being followed, and dynamically displays that on the home page of the application.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+The project based on a tutorial by Michael Hartl, and was completed as part of The Odin Project's Ruby on Rails curriculum.
