@@ -1,0 +1,55 @@
+== README
+
+This project was a Project Odin project to test building authentication  and authorization mechanisms.  The emphasis is on functionality, not on style.
+
+Users can create a new account and can create posts once they are logged in.  Only other logged in users will be able to see who wrote the posts; from the outside, anonymous users can only see the post content and not the author.
+
+The purpose of the project was to build an application with certain content visible only to the proper individuals.
+
+***Sample output:***
+
+1)Create post (Currently signed in as user 3):
+
+Post Content: This awesome post is for the README
+Author ID (Dynamically generated based on the currently logged in user): 3
+
+
+2) Show post (For logged in user:)
+
+Author: The Third User
+
+This awesome post is for the README
+
+
+3) Show all posts (For logged in users)
+
+Author: tomtom
+Testing User 1 first post
+
+Author: The Third User
+Anyone who isn't in this group smells bad
+
+Author: The Third User
+You'll never know who wrote this post!
+
+Author: The Third User
+Not even the NSA could figure out the author of this post
+
+Author: The Third User
+This awesome post is for the README
+
+
+4) Show all posts (not logged in)
+Testing User 1 first post
+
+Anyone who isn't in this group smells bad
+
+You'll never know who wrote this post!
+
+Not even the NSA could figure out the author of this post
+
+This awesome post is for the README 
+
+
+
+==End
