@@ -32,11 +32,13 @@ function draw_snake(){
 	SNAKE.push(578);
 	SNAKE.push(579);
 	SNAKE.push(580);
+
 }
 
 function play_game(){
 	genFruit();
 	move_snake();
+
 }
 
 function genFruit(){
@@ -45,16 +47,24 @@ function genFruit(){
 }
 
 function move_snake(){
+	var currentMove = '';
+
+	setInterval(function() {
+	  if (currentMove !== '') {
+	    move(currentMove);
+	  }
+	}, 100);
+
 	$(document).keydown(function(event) {
-		if(event.which == RIGHT){
-			move('r');
-		} else if (event.which == LEFT) {
-			move('l');
-		} else if (event.which == UP){
-			move('u');
-		} else if (event.which == DOWN){
-			move('d');
-		}
+	  if (event.which === RIGHT) {
+	    currentMove = 'r';
+	  } else if (event.which === LEFT) {
+	    currentMove = 'l';
+	  } else if (event.which === UP) {
+	    currentMove = 'u';
+	  } else if (event.which === DOWN) {
+	    currentMove = 'd';
+	  }
 	});
 	var move = function(dir){
 		var currentID = SNAKE[SNAKE.length-1];
@@ -82,6 +92,28 @@ function move_snake(){
 			genFruit();	 //generate a new fruit piece
 		}
 
+		//Check whether snake has hit itself
+		if ($("#"+nextID).hasClass("snake")){
+			alert('Game over!');
+			for (var i=0;i<=SNAKE.length;i++){
+				//remove snake from [i]
+				$("#"+SNAKE[i]).removeClass('snake');
+
+			}
+			SNAKE=[];
+			currentMove='';
+		}
+		//Check whether snake is out of bounds
+		if (!($("#"+nextID).hasClass("box"))){
+			alert('Game over!');
+			for (var i=0;i<=SNAKE.length;i++){
+				//remove snake from [i]
+				$("#"+SNAKE[i]).removeClass('snake');
+
+			}
+			SNAKE=[];
+			currentMove='';
+		}
 		//update SNAKE array
 		for (var i=0;i<SNAKE.length;i++){
 			//remove snake from [i]
@@ -99,6 +131,7 @@ function move_snake(){
 		$("#"+nextID).addClass('snakeHead');
 		$("#"+currentID).removeClass('snakeHead');	
 	};
+	
 }
 
 
@@ -106,6 +139,5 @@ function move_snake(){
 $(document).ready(function(){
 	draw_board(40,40);
 	draw_snake();
-	play_game();
+	play_game();	
 });
-
