@@ -1,6 +1,6 @@
 Project: jQuery and the DOM
 Source: http://www.theodinproject.com/javascript-and-jquery/jquery-and-the-dom
-
+Demo: http://htmlpreview.github.io/?https://github.com/tim5046/projectOdin/blob/master/Javascript/Snake/index.html
 Description:
 
 Let's give you a chance to dive deeply into working with events by building a Snake game. If you never played it (likely many years ago in your childhood), check out the Wikipedia Page for Snake. Basically, it's a snake that you have to move around the board and which grows longer with each piece of food it eats. You lose if it gets so big it hits itself or if it goes off the board.
