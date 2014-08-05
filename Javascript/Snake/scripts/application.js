@@ -35,7 +35,13 @@ function draw_snake(){
 }
 
 function play_game(){
+	genFruit();
 	move_snake();
+}
+
+function genFruit(){
+	var fruitID = Math.floor(Math.random()*1600)+1;
+	$("#content").find("#"+fruitID).addClass('fruit');
 }
 
 function move_snake(){
@@ -68,6 +74,13 @@ function move_snake(){
 				break;
 		}
 
+		var tail = 0;
+		//check whether the SNAKE has hit a 'fruit'
+		if ($("#"+nextID).hasClass("fruit")){
+			tail = SNAKE[0];
+			$("#"+nextID).removeClass('fruit');
+			genFruit();	 //generate a new fruit piece
+		}
 
 		//update SNAKE array
 		for (var i=0;i<SNAKE.length;i++){
@@ -75,14 +88,17 @@ function move_snake(){
 			$("#"+SNAKE[i]).removeClass('snake');
 			SNAKE[i]=SNAKE[i+1];
 		}
+		if (tail !== 0){
+			SNAKE.unshift(tail);
+		}
+
 		for (var i=0; i<SNAKE.length; i++){
 			$("#"+SNAKE[i]).addClass('snake');
 		}
 		SNAKE[SNAKE.length-1] = nextID;
 		$("#"+nextID).addClass('snakeHead');
-		$("#"+currentID).removeClass('snakeHead');
-		
-	}
+		$("#"+currentID).removeClass('snakeHead');	
+	};
 }
 
 
