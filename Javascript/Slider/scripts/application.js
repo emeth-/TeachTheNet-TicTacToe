@@ -1,55 +1,59 @@
 //Add the first image 
 
 $(document).ready(function(){
-	initPics();
-	currentImage = $('.selected').attr('id');
 
 
-	var navButton = $("li").find("img");
+	//initializations
+	var pictures = $("#slider").children("li");
+	var navItems = $("#navigation").children("li");
+	var currentNav, currentPic;
 
-	//show the right image when the nav button is clicked
-	$(navButton).on('click',function(){
-		$("#"+currentImage).removeClass('selected');
-		$("#"+currentImage).addClass('notSelected');
 
-		//change nav button when a different one is clicked
-		$('#navigation').children('li').children("img").removeClass('active');
-		$('#navigation').children('li').children("img").addClass('inactive');
+	//initialize nav
+	$("#navigation").find('li').first().addClass('active');
 
-		$(this).removeClass('inactive');
-		$(this).addClass('active');
-	
-		$("li img.active").attr('src','images/button1.png');
-		$("li img.inactive").attr('src','images/button2.png');
+	function goTo(i){
+		$(navItems).removeClass('active');
+		$("#navigation li").eq(i).addClass('active');
 
-		//show the correct image in the slider, corresponding to the nav button
-		var navID = $(this).attr('id');
-		$('#slider').children('img').removeClass('selected');
-		$('#slider').children('img').addClass('notSelected');
+		pictures.fadeOut(400)
+				.eq(i).fadeIn(400);
+	}
 
-		$("#image-"+navID).removeClass('notSelected');
-		$("#image-"+navID).addClass('selected');
+
+
+	//Click on new navigation button; make active
+	$("#navigation li").on('click',function(){
+		var index = $(this).index();
+		goTo(index);
 	});
-	
 
+	$("#next").on('click',function(){
+		//get current Nav index
+		currentNav = parseInt($('.active').index());
+			if (currentNav <3){
+				goTo(currentNav+1);
+			} else {
+				goTo(0);
+			}
+	});
 
+	$("#prev").on('click',function(){
+		//get current Nav index
+		currentNav = parseInt($('.active').index());
+			if (currentNav >0){
+				goTo(currentNav-1);
+			} else {
+				goTo(3);
+			}
+	});
+	goTo(0);
 
+	//loop to cycle through
+	setInterval(function(){
+      $("#next").trigger('click');
+    },2500);
 });
 
 
 
-function initPics(){
-	for (var i=1; i<5; i++){
-		var img = $("<img src=images/slider"+i+".jpg>");
-		$(img).attr('id',"image-"+i);
-		$(img).addClass('slider').addClass('notSelected').appendTo($("#slider"));
-	}
-	$("#image-1").removeClass('notSelected');
-	$("#image-1").addClass('selected');
-	$("li #1").removeClass('inactive')
-	$("li #1").addClass('active');
-
-	$("li img.active").attr('src','images/button1.png');
-	$("li img.inactive").attr('src','images/button2.png');
-
-}
