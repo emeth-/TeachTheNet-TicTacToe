@@ -1,0 +1,27 @@
+#container {
+	width:100%;
+	text-align:center;
+}
+
+#slider {
+	width: 660px;
+	height: 441px;
+	background:blue;
+	display:inline-block;
+	position:relative;
+}
+
+.notSelected {
+	visibility: hidden;
+}
+
+.slider {
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+li {
+	list-style:none;
+	display:inline-block;
+}
