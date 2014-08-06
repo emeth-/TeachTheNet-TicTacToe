@@ -1,0 +1,9 @@
+Project: Creating an Image Carousel/Slider in Javascript
+
+We'll take a break from games to build something that you'll probably create in the real world at some point -- a simple image carousel / slider which cycles through some preloaded images. See the one on eriktrautman.com for the general idea. jssor.com also has one, though yours will not contain any of those fancy transitions.
+
+Though it may seem a bit simple initially, this project will probably make you scratch your head a bit and that's good -- it's a very relevant real-world example of a feature you might be asked to build and you'll have to think your way through to the solution.
+
+Demo: http://htmlpreview.github.io/?https://github.com/tim5046/projectOdin/blob/master/Javascript/Slider/index.html
+
+Project: http://www.theodinproject.com/javascript-and-jquery/creating-an-image-carousel-slider?ref=lc-pb
