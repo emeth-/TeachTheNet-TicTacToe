@@ -40,6 +40,19 @@ function draw_board(x,y){
 }
 
 
+function checkCell(id){
+    //this function checks whether a box that was clicked contains a bomb or not
+    cell = $('.gameBoard').find('#'+id);
+    if (cell.hasClass('bomb')){
+           
+    } else if (cell.hasClass('blank')){
+        $(cell).removeClass('blank');
+        $(cell).text(''); 
+        $(cell).addClass('clicked');
+
+    }
+}
+
 
 
 
@@ -71,8 +84,8 @@ $(document).ready(function(){
     
     //left click check
      $(".left").find('td').on('mousedown',function(e){
-          if( e.button == 0 ) {
-              alert('left click!');
+          if( e.button === 0 ) {
+              checkCell($(this).attr('id'));
           }
      });
    

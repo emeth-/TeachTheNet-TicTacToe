@@ -26,4 +26,9 @@ td {
     padding:0;
 }
 
+.clicked {
+    background-color: #eee;
+    border:1px solid gray;
+}
+
 
