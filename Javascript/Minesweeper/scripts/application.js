@@ -42,7 +42,6 @@ function draw_board(x,y){
 function makeBombs(x,y){
     //after the board is generated, randomly place bombs onto the board
     var numBombs = (x*y)/10;
-    alert('Number of bombs: '+numBombs);
     (function makeBomb(){
         var rand=0;
         for (var i=1;i<numBombs+1;i++){
@@ -65,25 +64,49 @@ function checkCell(id){
     //this function checks whether a box that was clicked contains a bomb or not
     cell = $('.gameBoard').find('#'+id);
     if (cell.hasClass('bomb')){
+        //show all bombs if one is clicked
+        $('.bomb').each(function() {
+          $(this).text('');
+          $(this).append('<img src="http://www.chezpoor.com/minesweeper/images/bombrevealed.gif">'); 
+          endGame();
+        });
            
     } else if (cell.hasClass('blank')){
+        //check the number of bombs around the clicked square
+        var bombCount=0;
+        id=parseInt(id);
+        var adjacent=[(id - 1 - numCols),(id - numCols),((id+1)-numCols),(id-1),(id+1),(id-1+numCols),(id+numCols),(id+1+numCols)];
+        adjacent.forEach(function(entry){
+            if($('.gameBoard').find('#'+entry).hasClass('bomb')){
+             bombCount++; 
+            }
+        });
+       
+        
         $(cell).removeClass('blank');
-        $(cell).text(''); 
+        $(cell).text(bombCount); 
         $(cell).addClass('clicked');
     }
+}
+
+function endGame(){
+ //this function makes the game unplayable after a bomb is clicked
+    $('.cell').each(function(){
+     $(this).removeClass('blank');   
+    });
 }
 
 
 
 
 $(document).ready(function(){
-    
-        
+
     document.oncontextmenu = function() {return false;}; // disable right click menu
+     numRows=10;
+     numCols=10;
 
-
-    draw_board(10,10); 
-    makeBombs(10,10);
+    draw_board(numRows,numCols); 
+    makeBombs(numRows,numCols);
     
     //play game
     //right click check
