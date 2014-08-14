@@ -28,7 +28,18 @@ td {
 
 .clicked {
     background-color: #eee;
-    border:1px solid gray;
+    
 }
 
-
+.bomb {
+    height:16px;
+    width:16px;
+}
+.blank {
+    height:16px;
+    width:16px;
+}
+.flag {
+    height:16px;
+    width:16px;
+}

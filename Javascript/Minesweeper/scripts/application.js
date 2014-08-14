@@ -43,6 +43,9 @@ function makeBombs(x,y){
     //after the board is generated, randomly place bombs onto the board
     var numBombs = (x*y)/10;
     (function makeBomb(){
+        $('.bomb').each(function(){
+            $(this).removeClass('bomb');
+        });
         var rand=0;
         for (var i=1;i<numBombs+1;i++){
             rand=Math.floor(Math.random() * (x*y)) + 1;
@@ -74,8 +77,23 @@ function checkCell(id){
     } else if (cell.hasClass('blank')){
         //check the number of bombs around the clicked square
         var bombCount=0;
-        id=parseInt(id);
-        var adjacent=[(id - 1 - numCols),(id - numCols),((id+1)-numCols),(id-1),(id+1),(id-1+numCols),(id+numCols),(id+1+numCols)];
+        id=parseInt(id,10);
+        var adjacent=[];
+        
+        //check if cell clicked was on the far right of the board
+        if (id % numCols === 0){
+            adjacent=[(id - 1 - numCols),(id - numCols),(id-1),(id-1+numCols),(id+numCols)];           
+        } else if (((id-1) % numCols === 0) || id == 1){ //left side of board
+            adjacent=[(id - numCols),((id+1)-numCols),(id+1),(id+numCols),(id+1+numCols)];            
+        } else if (id < numCols){ //top row of board
+           adjacent=[(id-1),(id+1),(id-1+numCols),(id+numCols),(id+1+numCols)];             
+        } else if ((((numCols*numRows)-numCols) < id) && id < (numCols*numRows)) { //bottom row of board
+           adjacent=[(id - 1 - numCols),(id - numCols),((id+1)-numCols),(id-1),(id+1)];             
+        } else { //not on top row, bottom row, left or right
+           adjacent=[(id - 1 - numCols),(id - numCols),((id+1)-numCols),(id-1),(id+1),(id-1+numCols),(id+numCols),(id+1+numCols)]; 
+        } 
+        
+        
         adjacent.forEach(function(entry){
             if($('.gameBoard').find('#'+entry).hasClass('bomb')){
              bombCount++; 
