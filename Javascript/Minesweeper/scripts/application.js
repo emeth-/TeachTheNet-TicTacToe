@@ -11,18 +11,22 @@ function draw_board(x,y){
     
     //header row finished above. Now draw the actual cells
     
-     header.parent().last().append('<tr id ="cell"><td><img id="leftRightBorder" src="http://www.chezpoor.com/minesweeper/images/borderlr.gif"></td>');
+     header.parent().last().append('<tr class="left" id ="cell"><td><img id="leftRightBorder" src="http://www.chezpoor.com/minesweeper/images/borderlr.gif"></td>');
     for(var i=0; i<x;i++){
-        header.parent().find("#cell").last().append('<td class="cell blank" id='+i+'><img src="http://www.chezpoor.com/minesweeper/images/blank.gif"</td>');
+        header.parent().find("#cell").last().append('<td class="cell blank" id='+(i+1)+'><img src="http://www.chezpoor.com/minesweeper/images/blank.gif"</td>');
     }
     header.parent().find("#cell").last().append('<td class="right" id="cell"><img id="leftRightBorder" src="http://www.chezpoor.com/minesweeper/images/borderlr.gif"></td></tr>');
 
     //draw body
+    var counter=y+1;
     for(var j=0;j<y-1;j++){
+        
          header.parent().last().append('<tr class="left" id ="cell"><td><img id="leftRightBorder" src="http://www.chezpoor.com/minesweeper/images/borderlr.gif"></td>');
         for(var i=0; i<x;i++){
-            header.parent().last().find(".left").last().append('<td class="cell blank" id='+i+'><img src="http://www.chezpoor.com/minesweeper/images/blank.gif"></td>');
+            var newCount=i+counter;
+            header.parent().last().find(".left").last().append('<td class="cell blank" id='+newCount+'><img src="http://www.chezpoor.com/minesweeper/images/blank.gif"></td>');
         }
+        counter+=y;
         header.parent().last().find(".left").last().append('<td id="right"><img id="leftRightBorder" src="http://www.chezpoor.com/minesweeper/images/borderlr.gif"></td></tr>');    
     }
     
@@ -45,7 +49,7 @@ $(document).ready(function(){
     document.oncontextmenu = function() {return false;}; // disable right click menu
 
 
-    draw_board(10,10); 
+    draw_board(20,20); 
     
     //play game
     //right click check
@@ -56,7 +60,7 @@ $(document).ready(function(){
               $(this).addClass('flag');
               $(this).text('');
               $(this).append('<img src="http://www.chezpoor.com/minesweeper/images/bombflagged.gif">'); //add flag if it's blank
-          } else {
+          } else if($(this).hasClass('flag')) {
               $(this).removeClass('flag');
               $(this).addClass('blank');
               $(this).text('');
@@ -64,6 +68,13 @@ $(document).ready(function(){
           }
       }
     });
+    
+    //left click check
+     $(".left").find('td').on('mousedown',function(e){
+          if( e.button == 0 ) {
+              alert('left click!');
+          }
+     });
    
     
     
