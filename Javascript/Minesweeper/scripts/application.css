@@ -1,0 +1,29 @@
+#container{
+    background-color:#757575;
+}
+
+table {
+    border-collapse:collapse;
+}
+#tableBorder{
+    height:10px;
+    width:16px;
+}
+
+#leftRightBorder{
+    height:16px;
+    width:16px;
+}
+#bottomBorder{
+    height:16px;
+    width:16px;
+}
+
+tbody {
+    line-height:0;
+}
+td {
+    padding:0;
+}
+
+
