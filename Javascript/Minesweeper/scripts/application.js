@@ -1,8 +1,9 @@
 function draw_board(x,y){
+    $('.gameBoard').append('<tr id="header"></tr>');
+        
     //first draw the background
-    var header=$('.gameBoard').find("#header");
-    //http://www.chezpoor.com/minesweeper/images/bordertr.gif
-    header.append('<td><img id="tableBorder" src="http://www.chezpoor.com/minesweeper/images/bordertl.gif"></td>');
+     var header=$('.gameBoard').find("#header");
+    header.append('<tr><td><img id="tableBorder" src="http://www.chezpoor.com/minesweeper/images/bordertl.gif"></td>');
     for (var i=0; i<x; i++){
         //this adds in the border
         header.append('<td><img id="tableBorder" src="http://www.chezpoor.com/minesweeper/images/bordertb.gif"></td>');
@@ -12,7 +13,7 @@ function draw_board(x,y){
     //header row finished above. Now draw the actual cells
     
      header.parent().last().append('<tr class="left" id ="cell"><td><img id="leftRightBorder" src="http://www.chezpoor.com/minesweeper/images/borderlr.gif"></td>');
-    for(var i=0; i<x;i++){
+    for(i=0; i<x;i++){
         header.parent().find("#cell").last().append('<td class="cell blank" id='+(i+1)+'><img src="http://www.chezpoor.com/minesweeper/images/blank.gif"</td>');
     }
     header.parent().find("#cell").last().append('<td class="right" id="cell"><img id="leftRightBorder" src="http://www.chezpoor.com/minesweeper/images/borderlr.gif"></td></tr>');
@@ -22,7 +23,7 @@ function draw_board(x,y){
     for(var j=0;j<y-1;j++){
         
          header.parent().last().append('<tr class="left" id ="cell"><td><img id="leftRightBorder" src="http://www.chezpoor.com/minesweeper/images/borderlr.gif"></td>');
-        for(var i=0; i<x;i++){
+        for( i=0; i<x;i++){
             var newCount=i+counter;
             header.parent().last().find(".left").last().append('<td class="cell blank" id='+newCount+'><img src="http://www.chezpoor.com/minesweeper/images/blank.gif"></td>');
         }
@@ -32,11 +33,13 @@ function draw_board(x,y){
     
     //draw bottom border
         header.parent().last().append('<tr class="left" id ="cell"><td><img id="leftRightBorder" src="http://www.chezpoor.com/minesweeper/images/borderbl.gif"></td>'); 
-        for (var i=0; i<x; i++){
+        for ( i=0; i<x; i++){
             //this adds in the border
             header.parent().last().find(".left").last().append('<td><img id="bottomBorder" src="http://www.chezpoor.com/minesweeper/images/bordertb.gif"></td>');
         }
        header.parent().last().find(".left").last().append('<td><img id="leftRightBorder" src="http://www.chezpoor.com/minesweeper/images/borderbr.gif"></td></tr>');   
+    
+    makeBombs(x,y);
 }
 
 function makeBombs(x,y){
@@ -51,7 +54,8 @@ function makeBombs(x,y){
             rand=Math.floor(Math.random() * (x*y)) + 1;
             var cell = $('.gameBoard').find('#'+rand);
             if (cell.hasClass('bomb')){
-                makeBomb();
+               $('.gameBoard').find('#'+rand+1)
+               // makeBomb();
             } else {
                 cell.addClass('bomb');   
             }
@@ -100,10 +104,21 @@ function checkCell(id){
             }
         });
        
-        
-        $(cell).removeClass('blank');
-        $(cell).text(bombCount); 
-        $(cell).addClass('clicked');
+        if (bombCount === 0){ //need to make the connected zeroes 'stick' together and open at once
+            $(cell).removeClass('blank');
+            $(cell).text(''); 
+            $(cell).addClass('clicked'); 
+            
+            adjacent.forEach(function(entry){
+                checkCell(entry);             
+            });      
+
+        } else {
+            $(cell).removeClass('blank');
+            $(cell).text(bombCount); 
+            $(cell).addClass('clicked');    
+        }
+
     }
 }
 
@@ -122,13 +137,34 @@ $(document).ready(function(){
     document.oncontextmenu = function() {return false;}; // disable right click menu
      numRows=10;
      numCols=10;
+   
+    //make new game on button clicks
+    $('#headerBar').find('#easy').on('click',function(){
+        numRows=10;
+        numCols=10;
+        $('.gameBoard').text('');
+        draw_board(numRows,numCols);
+
+    });
+    $('#headerBar').find('#intermediate').on('click',function(){
+        numRows=20;
+        numCols=20;
+        $('.gameBoard').text('');
+        draw_board(numRows,numCols);
+    });
+    $('#headerBar').find('#expert').on('click',function(){
+        numRows=40;
+        numCols=40;
+        $('.gameBoard').text('');
+        draw_board(numRows,numCols);
+    });
 
     draw_board(numRows,numCols); 
-    makeBombs(numRows,numCols);
+
     
     //play game
     //right click check
-    $(".left").find('td').on('mousedown',function(e){
+    $(document).on('mousedown','.left td',function(e){
       if( e.button == 2 ) {
           if($(this).hasClass('blank')){
               $(this).removeClass('blank');
@@ -145,11 +181,14 @@ $(document).ready(function(){
     });
     
     //left click check
-     $(".left").find('td').on('mousedown',function(e){
+     $(document).on('mousedown','.left td',function(e){
           if( e.button === 0 ) {
               checkCell($(this).attr('id'));
           }
      });
+    
+    
+
    
     
     

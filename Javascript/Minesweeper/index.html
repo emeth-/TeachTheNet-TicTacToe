@@ -1,5 +1,6 @@
 <html>
 <head>
+<link href="http://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="scripts/application.css">
 <script src="scripts/application.js"></script>
@@ -7,16 +8,35 @@
 </head>
 <body>
 
-
-<h3>JavaScript Minesweeper</h3>
+<div class="headline"><h2>jQuery and JavaScript MineSweeper</h2></div>
+		<p style="text-align:center">Project motivation: <a target="_blank" href="hhttp://www.theodinproject.com/javascript-and-jquery/minesweeper?ref=lc-pb">The Odin Project</a></p>
+		<h4>To do:</h4>
+		<ul style="text-align:left;">
+			<li>Add game timer</li>
+			<li>Add some sort of winning message</li>
+			<li>Add more graphics (i.e. the Smiley face, etc)</li>
+			<li>Support custom board sizes</li>
+		</ul>
 <div id="container">
 	<div id="content">
         <div id="outer">
-            <table class="gameBoard"><tr id="header"></tr></table>
+            <div id="headerBar">
+                <table>
+                    <tr width="100%;">
+                        <td class="innerHead" id='easy'><button>Easy</button></td>
+                        <td class="innerHead" id='intermediate'><button>Intermediate</button></td>
+                        <td class="innerHead" id='expert'><button>Expert</button></td>
+                    </tr>                    
+                </table>                
+            </div>
+            <br /><br />
+            <table class="gameBoard"></table>
         </div>
         
 	</div>
 </div>
+
+
 
 </body>
 </html>
