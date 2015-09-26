@@ -1,5 +1,0 @@
-== README
-
-This sample application is a fairly robust Twitter clone.  The application allows users to create accounts, to log in (storing sessions), to post "tweets", to follow other users, and to unfollow other users.  Additionally, it features a status feed that is made up of the tweets of the users that are being followed, and dynamically displays that on the home page of the application.
-
-The project based on a tutorial by Michael Hartl, and was completed as part of The Odin Project's Ruby on Rails curriculum.
