@@ -2,21 +2,19 @@ $(document).ready(function(){
     var turnCount=0;
     
       $('#board').find('td').on('click', function(){
-            if (turnCount % 2 === 0){
+            if (turnCount % 2 === 1){
                 //player made a move
-                $(this).text('X');
-                checkVictory('X');
+                $(this).text('O');
+                checkVictory('O');
                 turnCount++;
             } else {
                 //do nothing, computer's turn
-                //$(this).text('O');
-                //checkVictory('O');
             }
           
       });
 
       setInterval(function(){
-            if (turnCount % 2 === 0){
+            if (turnCount % 2 === 1){
                 //do nothing, player's turn
             } else if ($('#newGame').hasClass('invisible')){
                 //do nothing, computer's turn
@@ -26,16 +24,16 @@ $(document).ready(function(){
                 //computer move 2
                 var move_found = false;
                 if (turnCount == 1) {
-                    if ($('#board').find('#2').text() == 'X'){
-                        $('#board').find('#7').text('O');
+                    if ($('#board').find('#2').text() == 'O'){
+                        $('#board').find('#7').text('X');
                         move_found = true;
                     }
-                    else if ($('#board').find('#4').text() == 'X' || $('#board').find('#6').text() == 'X'){
-                        $('#board').find('#2').text('O');
+                    else if ($('#board').find('#4').text() == 'O' || $('#board').find('#6').text() == 'O'){
+                        $('#board').find('#2').text('X');
                         move_found = true;
                     }
-                    else if ($('#board').find('#4').text() == 'X' || $('#board').find('#6').text() == 'X'){
-                        $('#board').find('#2').text('O');
+                    else if ($('#board').find('#4').text() == 'O' || $('#board').find('#6').text() == 'O'){
+                        $('#board').find('#2').text('X');
                         move_found = true;
                     }
                 }
@@ -43,44 +41,44 @@ $(document).ready(function(){
                 //No intelligent move found, just move to the first open space
                 if (move_found == false) {
                     if ($('#board').find('#1').text() == ''){
-                        $('#board').find('#1').text('O');
+                        $('#board').find('#1').text('X');
                         move_found = true;
                     }
                     else if ($('#board').find('#2').text() == ''){
-                        $('#board').find('#2').text('O');
+                        $('#board').find('#2').text('X');
                         move_found = true;
                     }
                     else if ($('#board').find('#3').text() == ''){
-                        $('#board').find('#3').text('O');
+                        $('#board').find('#3').text('X');
                         move_found = true;
                     }
                     else if ($('#board').find('#4').text() == ''){
-                        $('#board').find('#4').text('O');
+                        $('#board').find('#4').text('X');
                         move_found = true;
                     }
                     else if ($('#board').find('#5').text() == ''){
-                        $('#board').find('#5').text('O');
+                        $('#board').find('#5').text('X');
                         move_found = true;
                     }
                     else if ($('#board').find('#6').text() == ''){
-                        $('#board').find('#6').text('O');
+                        $('#board').find('#6').text('X');
                         move_found = true;
                     }
                     else if ($('#board').find('#7').text() == ''){
-                        $('#board').find('#7').text('O');
+                        $('#board').find('#7').text('X');
                         move_found = true;
                     }
                     else if ($('#board').find('#8').text() == ''){
-                        $('#board').find('#8').text('O');
+                        $('#board').find('#8').text('X');
                         move_found = true;
                     }
                     else if ($('#board').find('#9').text() == ''){
-                        $('#board').find('#9').text('O');
+                        $('#board').find('#9').text('X');
                         move_found = true;
                     }
                 }
                 if (move_found) {
-                    checkVictory('O');
+                    checkVictory('X');
                     turnCount++;
                 }
             }
